@@ -14,3 +14,11 @@ after_success:
   - docker build -t shegzima/miltu-nginx ./nginx
   - docker build -t shegzima/multi-server ./server
   - docker build -t shegzima.multi-worker ./worker
+#   login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+ 
+#   Take those images and push to docker hub
+  - docker push shegzima/multi-client
+  - docker push shegzima/multi-nginx
+  - docker push shegzima/multi-server
+  - docker push shegzima/multi-worker
