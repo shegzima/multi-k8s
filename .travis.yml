@@ -1,0 +1,16 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t shegzima/react-test - f ./client/Dockerfile.dev ./client
+
+script:
+# - docker run shegzima/react-test npm test -- --coverage
+  - docker run -e CI=true USERNAME/react-test npm test
+
+after_success:
+  - docker build -t shegzima/multi-client ./client
+  - docker build -t shegzima/miltu-nginx ./nginx
+  - docker build -t shegzima/multi-server ./server
+  - docker build -t shegzima.multi-worker ./worker
